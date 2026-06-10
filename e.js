@@ -1,5 +1,7 @@
 //Yea because why not
 
+console.log('ver 1.01')
+
 G.AddData({
   name: "Neverending E",
   author: "Panda",
