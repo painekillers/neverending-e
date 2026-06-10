@@ -13,83 +13,55 @@ G.AddData({
   }
 })
 
-if (!window.TheBigELoaded){
-  var doTheE = function (value) {
-    if (typeof value !== "string") {
-        value = value == null ? "" : String(value);
+function replacePageTextWithE(root = document.body) {
+  const walker = document.createTreeWalker(
+    root,
+    NodeFilter.SHOW_TEXT,
+    {
+      acceptNode(node) {
+        const parent = node.parentElement;
+        if (!parent) return NodeFilter.FILTER_REJECT;
+
+        const tag = parent.tagName;
+
+        // Never touch code / logic-critical areas
+        if (
+          ["SCRIPT", "STYLE", "NOSCRIPT", "TEXTAREA"].includes(tag)
+        ) {
+          return NodeFilter.FILTER_REJECT;
+        }
+
+        // Avoid inputs & editable content
+        if (parent.closest("input, select, option, textarea, [contenteditable='true']")) {
+          return NodeFilter.FILTER_REJECT;
+        }
+
+        const text = node.nodeValue;
+        if (!text || !text.trim()) return NodeFilter.FILTER_REJECT;
+
+        // Skip likely templating / placeholder syntax blocks entirely
+        if (
+          text.includes("[") && text.includes("]") ||
+          text.includes("{{") && text.includes("}}") ||
+          text.includes("${")
+        ) {
+          return NodeFilter.FILTER_REJECT;
+        }
+
+        return NodeFilter.FILTER_ACCEPT;
+      }
     }
+  );
 
-    return value.replace(/\[[^\]]*\]|\p{L}/gu, (match) => {
-        // leave bracket blocks unchanged
-        if (match[0] === "[") return match;
+  let node;
 
-        // replace letters with e/E based on case
-        return match === match.toUpperCase() ? "E" : "e";
+  while ((node = walker.nextNode())) {
+    node.nodeValue = node.nodeValue.replace(/[a-zA-Z0-9]/g, (ch) => {
+      if (/[a-zA-Z]/.test(ch)) {
+        return ch === ch.toUpperCase() ? "E" : "e";
+      }
+      return "e"; // numbers → e
     });
-}
-  
-  //Replace the .Message function
-  var msgFunc = G.Message
-  G.Message = function(obj) {
-    obj.text = doTheE(obj.text)
-    
-    msgFunc(obj)
   }
-
-  //Buttons
-  var buttonFunc = G.button
-  G.button = function(obj) {
-    obj.tooltip = doTheE(obj.tooltip)
-
-    buttonFunc(obj)
-  }
-
-  var settingButtonFunc = G.writeSettingButton
-  G.writeSettingButton = function(obj) {
-    obj.tooltip = doTheE(obj.tooltip)
-
-    settingButtonFunc(obj)
-  }
-
-  //Resources
-
-  var resFunc = G.Res
-  G.Res = function(obj) {
-    obj.displayName = doTheE(obj.displayName || obj.name)
-    obj.desc = doTheE(obj.desc)
-
-    resFunc(obj)
-  }
-/*
-  //Tech
-  var techFunc = G.Tech
-  G.Tech = function(obj) {
-    obj.displayName = doTheE(obj.displayName || obj.name)
-    obj.desc = doTheE(obj.desc)
-
-    techFunc(obj)
-  }
-
-  //Traits
-
-  var traitFunc = G.Trait
-  G.Tech = function(obj) {
-    obj.displayName = doTheE(obj.displayName || obj.name)
-    obj.desc = doTheE(obj.desc)
-
-    traitFunc(obj)
-  }  
-
-  //Units
-
-  var unitFunc = G.Unit
-  G.Unit = function(obj) {
-    obj.displayName = doTheE(obj.displayName || obj.name)
-    obj.desc = doTheE(obj.desc)
-
-    unitFunc(obj)
-  }  
-*/
-  var TheBigELoaded = true
 }
 
