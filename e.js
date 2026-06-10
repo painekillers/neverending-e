@@ -35,7 +35,7 @@ if (!window.TheBigELoaded){
     
     msgFunc(obj)
   }
-/*
+
   //Buttons
   var buttonFunc = G.button
   G.button = function(obj) {
@@ -52,7 +52,7 @@ if (!window.TheBigELoaded){
 
     settingButtonFunc(obj)
   }
-
+/*
   //Resources
 
   var resFunc = G.Res
