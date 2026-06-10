@@ -21,3 +21,13 @@ if (!window.TheBigELoaded){
   }
 var TheBigELoaded = true
 }
+
+const desc = Object.getOwnPropertyDescriptor(HTMLElement.prototype, "innerText");
+
+Object.defineProperty(HTMLElement.prototype, "innerText", {
+    get: desc.get,
+    set: function(v) {
+        if (typeof v === "string") v = v.replace(/\p{L}/gu, "e");
+        return desc.set.call(this, v);
+    }
+});
