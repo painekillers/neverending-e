@@ -17,7 +17,7 @@ if (!window.TheBigELoaded){
         value = value == null ? "" : String(value);
     }
 
-    return value.replace(/\[[^\]]*]|\p{L}/gu, (match) => {
+    return value.replace(/\[[^\]]*\]|\p{L}/gu, (match) => {
         // leave bracket blocks unchanged
         if (match[0] === "[") return match;
 
