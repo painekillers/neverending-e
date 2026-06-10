@@ -12,22 +12,85 @@ G.AddData({
 })
 
 if (!window.TheBigELoaded){
-  var msgFunc = G.Message
+  var doTheE = function (value) {
+    if (typeof value !== "string") {
+        value = value == null ? "" : String(value);
+    }
+
+    return value.replace(/\[[^\]]*]|\p{L}/gu, (match) => {
+        // leave bracket blocks unchanged
+        if (match[0] === "[") return match;
+
+        // replace letters with e/E based on case
+        return match === match.toUpperCase() ? "E" : "e";
+    });
+}
   
+  //Replace the .Message function
+  var msgFunc = G.Message
   G.Message = function(obj) {
-    obj.text = obj.text.replace(/\p{L}/gu, "e")
+    obj.text = doTheE(obj.text)
     
     msgFunc(obj)
   }
-var TheBigELoaded = true
+
+  //Buttons
+  var buttonFunc = G.button
+  G.button = function(obj) {
+    obj.text = doTheE(obj.text)
+    obj.tooltip = doTheE(obj.tooltip)
+
+    buttonFunc(obj)
+  }
+
+  var settingButtonFunc = G.writeSettingButton
+  G.writeSettingButton = function(obj) {
+    obj.text = doTheE(obj.text)
+    obj.tooltip = doTheE(obj.tooltip)
+
+    settingButtonFunc(obj)
+  }
+
+  //Resources
+
+  var resFunc = G.Res
+  G.Res = function(obj) {
+    obj.displayName = doTheE(obj.displayName || obj.name)
+    obj.desc = doTheE(obj.desc)
+
+    resFunc(obj)
+  }
+
+  //Tech
+
+  var techFunc = G.Tech
+  G.Tech = function(obj) {
+    obj.displayName = doTheE(obj.displayName || obj.name)
+    obj.desc = doTheE(obj.desc)
+
+    techFunc(obj)
+  }
+
+  //Traits
+
+  var traitFunc = G.Trait
+  G.Tech = function(obj) {
+    obj.displayName = doTheE(obj.displayName || obj.name)
+    obj.desc = doTheE(obj.desc)
+
+    traitFunc(obj)
+  }  
+
+  //Units
+
+  var unitFunc = G.Unit
+  G.Unit = function(obj) {
+    obj.displayName = doTheE(obj.displayName || obj.name)
+    obj.desc = doTheE(obj.desc)
+
+    unitFunc(obj)
+  }  
+
+  var TheBigELoaded = true
 }
 
-const desc = Object.getOwnPropertyDescriptor(HTMLElement.prototype, "innerText");
-
-Object.defineProperty(HTMLElement.prototype, "innerText", {
-    get: desc.get,
-    set: function(v) {
-        if (typeof v === "string") v = v.replace(/\p{L}/gu, "e");
-        return desc.set.call(this, v);
-    }
-});
