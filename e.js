@@ -39,7 +39,6 @@ if (!window.TheBigELoaded){
   //Buttons
   var buttonFunc = G.button
   G.button = function(obj) {
-    obj.text = doTheE(obj.text)
     obj.tooltip = doTheE(obj.tooltip)
 
     buttonFunc(obj)
@@ -47,7 +46,6 @@ if (!window.TheBigELoaded){
 
   var settingButtonFunc = G.writeSettingButton
   G.writeSettingButton = function(obj) {
-    obj.text = doTheE(obj.text)
     obj.tooltip = doTheE(obj.tooltip)
 
     settingButtonFunc(obj)
