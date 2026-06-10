@@ -2,4 +2,5 @@
 Because why not?
 
 The code technically works to convert any webpage to the letter E
+
 <sup> Had to get help from ChatGPT because I really suck as Javascript :( </sup>
