@@ -1,7 +1,5 @@
 //Yea because why not
 
-console.log('ver 1.02')
-
 G.AddData({
   name: "Neverending E",
   author: "Panda",
@@ -65,5 +63,28 @@ function replacePageTextWithE(root = document.body) {
   }
 }
 
-replacePageTextWithE()
+let scheduled = false;
+
+function scheduleRun() {
+  if (scheduled) return;
+
+  scheduled = true;
+  requestAnimationFrame(() => {
+    scheduled = false;
+    replacePageTextWithE();
+  });
+}
+
+const observer = new MutationObserver(() => {
+  scheduleRun();
+});
+
+observer.observe(document.body, {
+  childList: true,
+  subtree: true,
+  characterData: true
+});
+
+// initial run
+replacePageTextWithE();
 
