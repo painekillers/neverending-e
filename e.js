@@ -1,12 +1,23 @@
 //Yea because why not
 
-/*var msgFunc = G.Message;
+G.AddData({
+  name: "Neverending E",
+  author: "Panda",
+  desc: "The E never ends!",
+  engineVersion: 1,
+  sheets: {"customSheet":"[link to sprite sheet here]"},
+  func: function () {
+    
+  }
+})
 
-G.Message = function(obj) {
-  obj.text = obj.text.replace(/\p{L}/gu, "e");
+if (!window.TheBigELoaded){
+  var msgFunc = G.Message
   
-  msgFunc(obj);
+  G.Message = function(obj) {
+    obj.text = obj.text.replace(/\p{L}/gu, "e")
+    
+    msgFunc(obj)
+  }
+var TheBigELoaded = true
 }
-*/
-
-console.log("E")
