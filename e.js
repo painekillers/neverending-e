@@ -33,7 +33,7 @@ if (!window.TheBigELoaded){
     
     msgFunc(obj)
   }
-
+/*
   //Buttons
   var buttonFunc = G.button
   G.button = function(obj) {
@@ -90,7 +90,7 @@ if (!window.TheBigELoaded){
 
     unitFunc(obj)
   }  
-
+*/
   var TheBigELoaded = true
 }
 
