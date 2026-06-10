@@ -50,7 +50,7 @@ if (!window.TheBigELoaded){
 
     settingButtonFunc(obj)
   }
-/*
+
   //Resources
 
   var resFunc = G.Res
@@ -60,9 +60,8 @@ if (!window.TheBigELoaded){
 
     resFunc(obj)
   }
-
+/*
   //Tech
-
   var techFunc = G.Tech
   G.Tech = function(obj) {
     obj.displayName = doTheE(obj.displayName || obj.name)
