@@ -1,6 +1,6 @@
 //Yea because why not
 
-console.log('ver 1.01')
+console.log('ver 1.02')
 
 G.AddData({
   name: "Neverending E",
@@ -64,4 +64,6 @@ function replacePageTextWithE(root = document.body) {
     });
   }
 }
+
+replacePageTextWithE()
 
